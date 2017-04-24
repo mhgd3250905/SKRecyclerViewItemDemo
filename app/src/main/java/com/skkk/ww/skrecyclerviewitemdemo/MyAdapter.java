@@ -2,7 +2,6 @@ package com.skkk.ww.skrecyclerviewitemdemo;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,8 +10,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
+
+import id.zelory.compressor.Compressor;
 
 /**
  * Created by admin on 2017/4/22.
@@ -43,6 +45,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> implements Ite
         return viewHolder;
     }
 
+    public void setmDataList(List<DataModel> mDataList) {
+        this.mDataList = mDataList;
+    }
+
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         DataModel itemDate=mDataList.get(position);
@@ -54,7 +60,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> implements Ite
             holder.tvItem.setVisibility(View.VISIBLE);
             holder.ivItemImage.setVisibility(View.GONE);
             holder.ivItemMove.setVisibility(View.GONE);
-
 
         }else if (itemDate.getItemFlag()== DataModel.Flag.IMAGE){//如果是图片Item
             holder.ivItemImage.setVisibility(View.VISIBLE);
@@ -75,7 +80,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> implements Ite
             if (itemDate.getImagePath()==null){
                 return;
             }
-            Bitmap bitmapFromUri = BitmapFactory.decodeFile(itemDate.getImagePath());
+            Bitmap bitmapFromUri = new Compressor.Builder(context)
+                    .setMaxWidth(640)
+                    .setMaxHeight(480)
+                    .setQuality(100)
+                    .setCompressFormat(Bitmap.CompressFormat.WEBP)
+                    .build()
+                    .compressToBitmap(new File(itemDate.getImagePath()));
+
+//            Bitmap bitmapFromUri = BitmapFactory.decodeFile(itemDate.getImagePath());
             holder.ivItemImage.setImageBitmap(bitmapFromUri);
         }
 

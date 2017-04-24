@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -71,9 +70,7 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback{
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         View item = viewHolder.itemView;
         ViewGroup.LayoutParams layoutParams = item.getLayoutParams();
-        Log.d("MyItemTouchHelperCallba", actionState + " " + isCurrentlyActive);
         //如果当前是拖拽状态
-        Log.d("MyItemTouchHelperCallba", "layoutParams.height:" + layoutParams.height);
         if (actionState==ItemTouchHelper.ACTION_STATE_DRAG){
             if (isCurrentlyActive){//正在拖动
                 if (layoutParams.height> DensityUtil.dip2px(context,100)){

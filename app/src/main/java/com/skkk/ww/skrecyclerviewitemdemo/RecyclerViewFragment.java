@@ -53,6 +53,8 @@ public class RecyclerViewFragment extends Fragment {
     private MyItemTouchHelperCallback callback;
     private ItemTouchHelper itemTouchHelper;
     private MyAdapter adapter;
+    private LinearLayoutManager layoutManager;
+
 
     public RecyclerViewFragment() {
     }
@@ -67,16 +69,17 @@ public class RecyclerViewFragment extends Fragment {
 
 
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mDataList = loadData();
         //设置RecyclerView...
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         mRvFragment.setLayoutManager(layoutManager);
         adapter = new MyAdapter(getContext(), mDataList);
         mRvFragment.setAdapter(adapter);
         mRvFragment.setItemAnimator(new DefaultItemAnimator());
 
+        //设置添加照片点击事件
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,14 +97,14 @@ public class RecyclerViewFragment extends Fragment {
                     }
                     // 把文件地址转换成Uri格式
                     Uri uri;
-                    if (Build.VERSION.SDK_INT<24) {
+                    if (Build.VERSION.SDK_INT < 24) {
                         // 从文件中创建uri
                         uri = Uri.fromFile(new File(cameraPath));
                     } else {
                         //兼容android7.0 使用共享文件的形式
                         ContentValues contentValues = new ContentValues(1);
-                        contentValues.put(MediaStore.Images.Media.DATA,cameraPath);
-                        uri = FileProvider.getUriForFile(getContext().getApplicationContext(), getContext().getPackageName()+".fileprovider",new File(cameraPath));
+                        contentValues.put(MediaStore.Images.Media.DATA, cameraPath);
+                        uri = FileProvider.getUriForFile(getContext().getApplicationContext(), getContext().getPackageName() + ".fileprovider", new File(cameraPath));
                     }
                     // 设置系统相机拍摄照片完成后图片文件的存放地址
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
@@ -126,19 +129,12 @@ public class RecyclerViewFragment extends Fragment {
         });
     }
 
-
     /**
      * 加载数据
      */
     private List<DataModel> loadData() {
         List<DataModel> dates = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            if (i == 0) {
-                dates.add(new DataModel("这里是第" + i + "条item", DataModel.Flag.TEXT, null));
-            } else if (i == 1) {
-                dates.add(new DataModel("这里是第" + i + "条item", DataModel.Flag.IMAGE, null));
-            }
-        }
+        dates.add(new DataModel("这里是第" + 1 + "条item", DataModel.Flag.TEXT, null));
         return dates;
     }
 

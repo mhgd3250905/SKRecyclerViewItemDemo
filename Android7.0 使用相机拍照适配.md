@@ -1,5 +1,7 @@
 ## Android7.0 使用相机拍照适配
 
+>参考文章[贾鹏辉的技术博客-Android7.0适配心得](http://www.devio.org/2016/09/28/Android7.0%E9%80%82%E9%85%8D%E5%BF%83%E5%BE%97/)
+
 ### 1.配置Manifest.xml
 ```xml
 <application

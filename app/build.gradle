@@ -29,4 +29,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.1'
     compile 'com.android.support:support-v4:25.2.0'
     testCompile 'junit:junit:4.12'
+
+    //图片压缩
+    compile 'id.zelory:compressor:1.0.4'
 }
