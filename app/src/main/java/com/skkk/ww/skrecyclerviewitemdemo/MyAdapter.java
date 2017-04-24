@@ -1,8 +1,11 @@
 package com.skkk.ww.skrecyclerviewitemdemo;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,14 +25,14 @@ import java.util.List;
 */
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> implements ItemTouchHelperAdapter {
     private Context context;
-    private List<String> mDataList;
+    private List<DataModel> mDataList;
     private OnStartDragListener onStartDragListener;
 
     public void setOnStartDragListener(OnStartDragListener onStartDragListener) {
         this.onStartDragListener = onStartDragListener;
     }
 
-    public MyAdapter(Context context, List<String> mDataList) {
+    public MyAdapter(Context context, List<DataModel> mDataList) {
         this.context = context;
         this.mDataList = mDataList;
     }
@@ -42,17 +45,41 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> implements Ite
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        holder.tvItem.setText(mDataList.get(position));
-        holder.ivItemMove.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (MotionEventCompat.getActionMasked(event)==MotionEvent.ACTION_DOWN
-                        &&onStartDragListener!=null){
-                    onStartDragListener.onStartDragListener(holder);
+        DataModel itemDate=mDataList.get(position);
+        if (itemDate.getItemFlag()== DataModel.Flag.TEXT) {//如果是文本Item
+            holder.tvItem.setText(mDataList.get(position).getContent());
+            ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+            layoutParams.height=ViewGroup.LayoutParams.WRAP_CONTENT;
+            holder.itemView.setLayoutParams(layoutParams);
+            holder.tvItem.setVisibility(View.VISIBLE);
+            holder.ivItemImage.setVisibility(View.GONE);
+            holder.ivItemMove.setVisibility(View.GONE);
+
+
+        }else if (itemDate.getItemFlag()== DataModel.Flag.IMAGE){//如果是图片Item
+            holder.ivItemImage.setVisibility(View.VISIBLE);
+            holder.ivItemMove.setVisibility(View.VISIBLE);
+            holder.tvItem.setVisibility(View.GONE);
+
+            holder.ivItemMove.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (MotionEventCompat.getActionMasked(event)==MotionEvent.ACTION_DOWN
+                            &&onStartDragListener!=null){
+                        onStartDragListener.onStartDragListener(holder);
+                    }
+                    return false;
                 }
-                return false;
+            });
+
+            if (itemDate.getImagePath()==null){
+                return;
             }
-        });
+            Bitmap bitmapFromUri = BitmapFactory.decodeFile(itemDate.getImagePath());
+            holder.ivItemImage.setImageBitmap(bitmapFromUri);
+        }
+
+        Log.d("MyAdapter", "holder.itemView.getLayoutParams().height:" + holder.itemView.getLayoutParams().height);
     }
 
     @Override

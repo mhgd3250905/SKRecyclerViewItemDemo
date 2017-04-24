@@ -4,4 +4,6 @@
     <item name="tv_item_recylcer" type="id">tv_item_recylcer</item>
     <item name="iv_item_move" type="id">iv_item_move</item>
     <item name="fl_container" type="id">fl_container</item>
+    <item name="iv_item_img" type="id">iv_item_img</item>
+    <item name="btn_insert" type="id">btn_insert</item>
 </resources>

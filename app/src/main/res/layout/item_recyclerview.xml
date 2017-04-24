@@ -1,35 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="300dp"
     android:background="#fff">
 
-    <TextView
-        android:background="@color/colorPrimary"
-        android:layout_margin="10dp"
+    <EditText
+        android:background="@null"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:id="@id/tv_item_recylcer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:gravity="left|top"
         android:text="@string/app_name"
         android:textSize="30dp"
         android:layout_alignParentEnd="true" />
 
-    <View
+    <ImageView
+        android:layout_margin="10dp"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        android:src="@mipmap/ic_launcher"
+        android:id="@id/iv_item_img"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark" />
+        android:layout_height="300dp"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"/>
 
     <ImageView
-        android:layout_margin="5dp"
+        android:visibility="visible"
         android:id="@id/iv_item_move"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/vector_item_move"
-        android:layout_alignTop="@+id/tv_item_recylcer"
-        android:layout_alignRight="@+id/tv_item_recylcer" />
+        android:layout_alignTop="@+id/iv_item_img"
+        android:layout_alignRight="@+id/iv_item_img" />
 
 </RelativeLayout>

@@ -22,6 +22,8 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
     public TextView tvItem;
     @InjectView(R.id.iv_item_move)
     public ImageView ivItemMove;
+    @InjectView(R.id.iv_item_img)
+    public ImageView ivItemImage;
 
     public MyViewHolder(View itemView) {
         super(itemView);
